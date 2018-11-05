@@ -54,8 +54,8 @@ public class FunctionalHazardTableModel extends DefaultTableModel {
 	@Override
 	public String getColumnName(int column) {
 		switch(column) {
-			case 0: return "Übergang (Term -> Term)";
-			case 1: return "Übergang (Wert -> Wert)";
+			case 0: return "Ãœbergang (Term -> Term)";
+			case 1: return "Ãœbergang (Wert -> Wert)";
 			case 2: return "Hazard?";
 			default: return "";
 		}

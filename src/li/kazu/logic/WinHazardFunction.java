@@ -156,7 +156,7 @@ public class WinHazardFunction extends JInternalFrame implements FunctionListene
 			if (radStatic.isSelected())		{mode = FunctionalHazardCheck.Mode.STATIC;}
 			
 			if (mode == null) {
-				JOptionPane.showMessageDialog(null, "kein Modus gew‰hlt");
+				JOptionPane.showMessageDialog(null, "kein Modus gew√§hlt");
 				return;
 			}
 			

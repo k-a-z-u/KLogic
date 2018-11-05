@@ -61,29 +61,31 @@ public class Function {
 		}
 		return terms;
 	}
-		
-	/** add a new minterm to the KV */
-	public void addMinterm(int nr) {
+	
+		/** add a new minterm to the KV */
+	public void addMinterm(int nr, boolean fireChanged) {
 		checkTermNr(nr);
 		values[nr] = 1;
-		onFunctionChanged();
+		if (fireChanged) {onFunctionChanged();}
 	}
 	
 	/** add new minterms to the KV */
 	public void addMinterms(int[] nrs) {
-		for (int nr : nrs) {addMinterm(nr);}
+		for (int nr : nrs) {addMinterm(nr, false);}
+		onFunctionChanged();
 	}
-
+	
 	/** add a new maxterm to the KV */
-	public void addMaxterm(int nr) {
+	public void addMaxterm(int nr, boolean fireChanged) {
 		checkTermNr(nr);
 		values[nr] = 0;
-		onFunctionChanged();
+		if (fireChanged) {onFunctionChanged();}
 	}
 	
 	/** add new maxterms to the KV */
 	public void addMaxterms(int[] nrs) {
-		for (int nr : nrs) {addMaxterm(nr);}
+		for (int nr : nrs) {addMaxterm(nr, false);}
+		onFunctionChanged();
 	}
 	
 	/** get the kv-entry for the given term-nr */
@@ -106,6 +108,10 @@ public class Function {
 	
 	public int getNumFields() {
 		return this.numFields;
+	}
+	
+	public void fireChanged() {
+		this.onFunctionChanged();
 	}
 	
 	private void onFunctionChanged() {

@@ -9,6 +9,7 @@ public class Domination {
 	
 	protected final int rows;
 	protected final int cols;
+	private boolean success = false;
 	
 	/** current content */
 	protected final boolean[] tbl;
@@ -53,6 +54,28 @@ public class Domination {
 	
 	private int getIdx(final int primeTermIdx, final int termNr) {
 		return primeTermIdx * cols + termNr;
+	}
+	
+	/** must be called BEFORE combine() */
+	public List<Integer> getCorePrimeTerms() {
+		final ArrayList<Integer> lst = new ArrayList<>();
+		for (int col = 0; col < cols; ++col) {
+			int firstHit = -1;
+			for (int row = 0; row < rows; ++row) {
+				final boolean isSet = get(row, col);
+				if (isSet) {
+					if (firstHit == -1) {
+						firstHit = row;
+					} else {
+						firstHit = -2;	// duplicate -> not a core prime term
+					}
+				}
+			}
+			if (firstHit >= 0) {
+				lst.add(firstHit);
+			}
+		}
+		return lst;
 	}
 	
 	@Override
@@ -161,6 +184,10 @@ public class Domination {
 		return steps.size();
 	}
 	
+	public boolean wasSuccessful() {
+		return success;
+	}
+	
 	public void combine() {
 		
 		System.out.println(this);
@@ -171,7 +198,8 @@ public class Domination {
 			System.out.println(this);
 			
 			steps.add(tbl.clone());
-			if (!combineRows()) {break;}
+			if (!combineRows()) {success = false; break;}		// automatic mode failed.. needs hand-adjustment
+			success = true;
 			System.out.println(this);
 			
 		}

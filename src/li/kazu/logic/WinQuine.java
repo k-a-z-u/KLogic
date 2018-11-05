@@ -34,6 +34,7 @@ public class WinQuine extends JInternalFrame implements QuineListener {
 	
 	private final JTextField txtPrime = new JTextField();
 	private final JTextField txtCorePrime = new JTextField();
+	private final JTextField txtMinForm = new JTextField();
 
 	private final Quine quine;
 	
@@ -60,14 +61,18 @@ public class WinQuine extends JInternalFrame implements QuineListener {
 
 		gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 1; gbc.gridwidth = 1; gbc.weighty = 0; add(new JLabel("Primimplikanten"), gbc);
 		gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 1; gbc.gridwidth = 1; gbc.weighty = 0; add(txtPrime, gbc);
-		gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 1; gbc.gridwidth = 1; gbc.weighty = 0; add(new JLabel("Kernprimimplikanten"), gbc);
+		
+		gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 1; gbc.gridwidth = 1; gbc.weighty = 0; add(new JLabel("Kernprimimplikanten (Beta)"), gbc);
 		gbc.gridx = 0; gbc.gridy = 5; gbc.weightx = 1; gbc.gridwidth = 1; gbc.weighty = 0; add(txtCorePrime, gbc);
+		
+		gbc.gridx = 0; gbc.gridy = 6; gbc.weightx = 1; gbc.gridwidth = 1; gbc.weighty = 0; add(new JLabel("Minimalform (Beta)"), gbc);
+		gbc.gridx = 0; gbc.gridy = 7; gbc.weightx = 1; gbc.gridwidth = 1; gbc.weighty = 0; add(txtMinForm, gbc);
 		
 		final JPanel pnlOpts = new JPanel();
 		pnlOpts.add(btnTable1Tex);
 		pnlOpts.add(btnTable2Tex);
 		
-		gbc.gridx = 0; gbc.gridy = 6; gbc.weightx = 1; gbc.gridwidth = 1; gbc.weighty = 0; add(pnlOpts, gbc);
+		gbc.gridx = 0; gbc.gridy = 8; gbc.weightx = 1; gbc.gridwidth = 1; gbc.weighty = 0; add(pnlOpts, gbc);
 		
 	}
 
@@ -75,8 +80,9 @@ public class WinQuine extends JInternalFrame implements QuineListener {
 	public void onQuineChanged(final Quine q) {
 		
 		txtPrime.setText(q.getPrimeTermsAllStr());
-		txtCorePrime.setText(q.getPrimeTermMinimumStr());
-				
+		txtCorePrime.setText( q.getCorePrimeTermsStr() );
+		txtMinForm.setText( q.wasSuccessful() ? q.getPrimeTermMinimumStr() : "nicht automatisch lösbar");
+
 		mdl1.setData(q);
 		mdl1.applySizes(tblResult1);
 		

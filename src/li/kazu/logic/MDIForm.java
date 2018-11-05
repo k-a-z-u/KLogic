@@ -28,7 +28,7 @@ public class MDIForm extends JFrame implements QuineTable1Listener, WinHazardFun
 
 	public MDIForm() {
 		
-		setTitle("KLogic v1.3");
+		setTitle("KLogic v1.4");
 		
 		desktop = new JDesktopPane();
 	    //createFrame(); //Create first window

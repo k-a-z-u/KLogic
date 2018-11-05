@@ -21,6 +21,8 @@ public class Quine implements FunctionListener {
 	private boolean aIsMSB = false;
 	private int nextPrimeTerm = 0;
 	Domination dom = null;
+	private ArrayList<Entry> corePrimeTerms = new ArrayList<>();
+
 	
 	private ArrayList<QuineListener> listeners = new ArrayList<>();
 	
@@ -73,13 +75,26 @@ public class Quine implements FunctionListener {
 				levels.get(0).entries.add(e);
 			}
 			
-			// minimize
+			// minimize (1)
 			while(_combine()) {;}
 			final List<Entry> primeTerms = getPrimeTermsAll();
+			
+			// create domination table
 			dom = new Domination(func.getNumVariables(), primeTerms);
+			
+			// before minimization: get all core prime terms
+			final List<Integer> corePrimeTermIndicies = dom.getCorePrimeTerms();
+			corePrimeTerms.clear();
+			for (final int i : corePrimeTermIndicies) {
+				final Entry e = primeTerms.get(i);
+				corePrimeTerms.add(e);
+			}
+			
+			// minimize (2)
 			dom.combine();
 		
 		}
+		
 		
 		// inform listeners
 		for (final QuineListener l : listeners) {
@@ -94,6 +109,9 @@ public class Quine implements FunctionListener {
 	
 	public ArrayList<Level> getLevels() {return levels;}
 	
+	public List<Entry> getCorePrimeTerms() {
+		return corePrimeTerms;
+	}
 	
 //	public void combine() {
 //		while(_combine()) {;}
@@ -180,10 +198,27 @@ public class Quine implements FunctionListener {
 		return lst;
 	}
 	
+	private List<Entry> getPrimeTermsCore() {
+		final ArrayList<Entry> lst = new ArrayList<>();
+		for (final Level lvl : levels) {
+			for (final Entry e : lvl.entries) {
+				if (e.prime()) {
+					lst.add(e);
+				}
+			}
+		}
+		return lst;
+	}
+	
+	public boolean wasSuccessful() {
+		return dom != null && dom.wasSuccessful();
+	}
+	
 	/** prime-terms after domination */
 	private List<Entry> getPrimeTermsNeeded() {
 		
 		if (dom == null) {return new ArrayList<>();}
+		if (!dom.wasSuccessful()) {return new ArrayList<>();}
 		
 		final List<Integer> indices = dom.getFinalPrimeTerms();
 		final List<Entry> allTerms = getPrimeTermsAll();
@@ -304,6 +339,10 @@ public class Quine implements FunctionListener {
 	
 	public String getPrimeTermMinimumStr() {
 		return termsToString(getPrimeTermsNeeded());
+	}
+	
+	public String getCorePrimeTermsStr() {
+		return termsToString(getCorePrimeTerms());
 	}
 	
 	public Domination getDomination() {

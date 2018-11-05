@@ -1,6 +1,7 @@
 package li.kazu.logic;
 
 
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import li.kazu.logic.func.Function;
@@ -13,6 +14,8 @@ public class Main {
 		
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
+		
+		
 		//testHazard();
 		
 //		final JFrame frm = new JFrame();
@@ -27,7 +30,8 @@ public class Main {
 //		frm.setVisible(true);
 		
 //		new UI();
-		new MDIForm();
+		MDIForm frm = new MDIForm();
+		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 //		final int numTerms = 4;
 //		final Quine q = new Quine(numTerms);
@@ -44,13 +48,15 @@ public class Main {
 		
 		Function func = new Function();
 		func.setNumVariables(4);
-		func.addMinterm(1);
-		func.addMinterm(9);
-		func.addMinterm(7);
-		func.addMinterm(15);
-		func.addMinterm(14);
-		func.addMinterm(13);
-		func.addMinterm(12);
+//		func.addMinterm(1);
+//		func.addMinterm(9);
+//		func.addMinterm(7);
+//		func.addMinterm(15);
+//		func.addMinterm(14);
+//		func.addMinterm(13);
+//		func.addMinterm(12);
+		
+		func.addMinterms( new int[] {1,9,7,15,14,13,12} );
 		
 		final FunctionalHazardCheckResult res = FunctionalHazardCheck.checkFromTermNr(func, 0, FunctionalHazardCheck.Mode.DYNAMIC);
 		for (FunctionalHazardCheckResult.Entry e : res.entries) {

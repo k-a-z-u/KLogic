@@ -52,7 +52,7 @@ public class FunctionalHazardWaysTableModel extends DefaultTableModel {
 	public String getColumnName(int column) {
 		switch(column) {
 			case 0: return "Weg";
-			case 1: return "Ausgangs‰nderung";
+			case 1: return "Ausgangs√§nderung";
 			case 2: return "Hazard?";
 			default: return "";
 		}

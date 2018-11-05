@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -48,10 +49,16 @@ public class WinInput extends JInternalFrame {
 				final int numVariables = Integer.parseInt(txtVars.getText());
 				func.setNumVariables(numVariables);
 				
+				
 				final String terms[] = txtTerms.getText().split(",");
+				final int[] minterms = new int[terms.length];
+				int i = 0;
 				for (final String term : terms) {
-					func.addMinterm(Integer.parseInt(term.trim()));
+					final int minterm = Integer.parseInt(term.trim());
+					minterms[i] = minterm;
+					++i;
 				}
+				func.addMinterms(minterms);
 				
 			}
 		});

@@ -50,7 +50,7 @@ public class StructuralHazardTableModel extends DefaultTableModel {
 	@Override
 	public String getColumnName(int column) {
 		switch(column) {
-			case 0: return "Übergang";
+			case 0: return "Ãœbergang";
 			case 1: return "Hazard-Type";
 			default: return "";
 		}
