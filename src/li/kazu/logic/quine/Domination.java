@@ -1,6 +1,7 @@
 package li.kazu.logic.quine;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -57,8 +58,8 @@ public class Domination {
 	}
 	
 	/** must be called BEFORE combine() */
-	public List<Integer> getCorePrimeTerms() {
-		final ArrayList<Integer> lst = new ArrayList<>();
+	public Integer[] getCorePrimeTermIndices() {
+		final HashSet<Integer> set = new HashSet<>();
 		for (int col = 0; col < cols; ++col) {
 			int firstHit = -1;
 			for (int row = 0; row < rows; ++row) {
@@ -72,10 +73,10 @@ public class Domination {
 				}
 			}
 			if (firstHit >= 0) {
-				lst.add(firstHit);
+				set.add(firstHit);
 			}
 		}
-		return lst;
+		return set.toArray(new Integer[0]);
 	}
 	
 	@Override

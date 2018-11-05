@@ -18,7 +18,7 @@ public class Quine implements FunctionListener {
 	}
 	
 	private boolean showDuplicates = false;
-	private boolean aIsMSB = false;
+	//private boolean aIsMSB = false;
 	private int nextPrimeTerm = 0;
 	Domination dom = null;
 	private ArrayList<Entry> corePrimeTerms = new ArrayList<>();
@@ -83,7 +83,7 @@ public class Quine implements FunctionListener {
 			dom = new Domination(func.getNumVariables(), primeTerms);
 			
 			// before minimization: get all core prime terms
-			final List<Integer> corePrimeTermIndicies = dom.getCorePrimeTerms();
+			final Integer[] corePrimeTermIndicies = dom.getCorePrimeTermIndices();
 			corePrimeTerms.clear();
 			for (final int i : corePrimeTermIndicies) {
 				final Entry e = primeTerms.get(i);
@@ -105,7 +105,7 @@ public class Quine implements FunctionListener {
 	
 	public void setShowDuplicates(boolean show) {this.showDuplicates = show;}
 	
-	public void setAMSB(boolean msb) {this.aIsMSB = msb;}
+	//public void setAMSB(boolean msb) {this.aIsMSB = msb;}
 	
 	public ArrayList<Level> getLevels() {return levels;}
 	
@@ -297,32 +297,34 @@ public class Quine implements FunctionListener {
 	
 	private String termsToString(final List<Entry> terms) {
 		
-		final int numVars = func.getNumVariables();
+//		final int numVars = func.getNumVariables();
 		
-		final char chars[] = new char[numVars];
-		for (int i = 0; i < numVars; ++i) {
-			chars[i] = aIsMSB ? (char)('a'+numVars-i-1) : (char)('a'+i);
-		}
-
+//		final char chars[] = new char[numVars];
+//		for (int i = 0; i < numVars; ++i) {
+//			chars[i] = aIsMSB ? (char)('a'+numVars-i-1) : (char)('a'+i);
+//		}
+		
 		final StringBuilder sb = new StringBuilder();
 		
 		for (Entry e : terms) {
 			sb.append('(');
 			boolean empty = true;
-			for (int i = 0; i < e.mask.length(); ++i) {
+			//for (int i = 0; i < e.mask.length(); ++i) {
+			for (int i = e.mask.length()-1; i >= 0; --i) {
 				int j = e.mask.length() - i - 1;
 				char mask = e.mask.charAt(j);
-				char c = chars[i];
+				//char c = chars[i];
+				final String var = func.getVariableName(i);
 				if (mask == '0') {
-					sb.append("!").append(c).append(" * ");
+					sb.append("!").append(var).append(" ");
 					empty = false;
 				} else if (mask == '1') {
-					sb.append(c).append(" * ");
+					sb.append(var).append(" ");
 					empty = false;
 				}
 			}
 			if (empty) {sb.append("1");}
-			if (sb.length() >= 3) {sb.setLength(sb.length()-3);}			// remove trailing " * "
+			if (sb.length() >= 1) {sb.setLength(sb.length()-1);}			// remove trailing " "
 			sb.append(") + ");
 		}
 	

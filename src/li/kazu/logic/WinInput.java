@@ -19,7 +19,7 @@ public class WinInput extends JInternalFrame {
 
 	
 	private final JTextField txtTerms = new JTextField("0,1,4,5,6,7,8,9,11,15");	
-	private final JTextField txtVars = new JTextField("4");	
+	private final JTextField txtVars = new JTextField("a,b,c,d");	
 	private final JButton btnOk = new JButton("uebernehmen");
 	
 	public WinInput(final Function func) {
@@ -46,9 +46,11 @@ public class WinInput extends JInternalFrame {
 				
 				func.clear();
 				
-				final int numVariables = Integer.parseInt(txtVars.getText());
-				func.setNumVariables(numVariables);
+				//final int numVariables = Integer.parseInt(txtVars.getText());
+				//func.setNumVariables(numVariables);
 				
+				final String[] varibles = txtVars.getText().split(",");
+				func.setVariables(varibles);
 				
 				final String terms[] = txtTerms.getText().split(",");
 				final int[] minterms = new int[terms.length];

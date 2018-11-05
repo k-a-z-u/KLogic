@@ -47,7 +47,7 @@ public class Main {
 	private static void testHazard() {
 		
 		Function func = new Function();
-		func.setNumVariables(4);
+		func.setVariables( new String[] {"a","b","c","d","e"} );
 //		func.addMinterm(1);
 //		func.addMinterm(9);
 //		func.addMinterm(7);

@@ -6,6 +6,7 @@ import java.util.List;
 /** describes one logic function (minterms, maxterms, dont-care) */
 public class Function {
 
+	private String[] varNames;
 	private int numVariables;
 	private int numFields;
 	private int[] values = new int[0];
@@ -13,19 +14,23 @@ public class Function {
 	
 	private ArrayList<FunctionListener> listeners = new ArrayList<>();
 	
-	/** the number of variables to display (2-5) */
-	public void setNumVariables(int numVariables) {
+	/** the variable names to use (2-5) varNames[0] = LSB! */
+	public void setVariables(String[] varNames) {
 		
+		final int numVariables = varNames.length;
 		if (numVariables < 2 || numVariables > 5) {throw new RuntimeException("out of bounds");}
 		
+		this.varNames = varNames;
 		this.numVariables = numVariables;
-		this.numFields = (int) Math.pow(2, this.numVariables);
+		this.numFields = (int) Math.pow(2, numVariables);
 		this.values = new int[this.numFields];
 		clear();
 		
 	}
 	
-	private final String[] varNames = new String[] {"a", "b", "c", "d", "e"};
+	//private final String[] varNames = new String[] {"a", "b", "c", "d", "e"};
+	
+	/** get the function's variable names. idx[0] = LSB! */
 	public String getVariableName(final int idx) {
 		return varNames[idx];
 	}
