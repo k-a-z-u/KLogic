@@ -21,7 +21,7 @@ public class KVRenderer {
 	}
 	
 	static enum Pos {FIRST, LAST};
-	static enum Dir {HOR, VER};
+	static enum Dir {HOR, VER_RIGHT, VER_LEFT};
 	
 	static class KVVariable {
 		int varNr;
@@ -62,19 +62,19 @@ public class KVRenderer {
 		
 		KVSetup s2 = new KVSetup(2,2);	s2.add(0,0,0); s2.add(1,0,1); s2.add(0,1,2); s2.add(1,1,3);
 										s2.addVariable(new KVVariable(0, 2,2,Pos.FIRST,1,Dir.HOR));
-										s2.addVariable(new KVVariable(1, 2,2,Pos.FIRST,1,Dir.VER));
+										s2.addVariable(new KVVariable(1, 2,2,Pos.FIRST,1,Dir.VER_LEFT));
 		
 		KVSetup s3 = new KVSetup(4,2);	s3.add(0,0,0); s3.add(1,0,1); s3.add(0,1,2); s3.add(1,1,3);		s3.add(2,0,5); s3.add(3,0,4); s3.add(2,1,7); s3.add(3,1,6);
 										s3.addVariable(new KVVariable(0, 2,3,Pos.FIRST,1,Dir.HOR));
-										s3.addVariable(new KVVariable(1, 2,2,Pos.FIRST,1,Dir.VER));
+										s3.addVariable(new KVVariable(1, 2,2,Pos.FIRST,1,Dir.VER_LEFT));
 										s3.addVariable(new KVVariable(2, 3,4,Pos.LAST,1,Dir.HOR));
 										
 		KVSetup s4 = new KVSetup(4,4);	s4.add(0,0,0); s4.add(1,0,1); s4.add(0,1,2); s4.add(1,1,3);		s4.add(2,0,5); s4.add(3,0,4); s4.add(2,1,7); s4.add(3,1,6);
 										s4.add(0,2,10); s4.add(1,2,11); s4.add(0,3,8); s4.add(1,3,9);	s4.add(2,2,15); s4.add(3,2,14); s4.add(2,3,13); s4.add(3,3,12);
 										s4.addVariable(new KVVariable(0, 2,3,Pos.FIRST,1,Dir.HOR));
-										s4.addVariable(new KVVariable(1, 2,3,Pos.FIRST,1,Dir.VER));
+										s4.addVariable(new KVVariable(1, 2,3,Pos.FIRST,1,Dir.VER_LEFT));
 										s4.addVariable(new KVVariable(2, 3,4,Pos.LAST,1,Dir.HOR));
-										s4.addVariable(new KVVariable(3, 3,4,Pos.LAST,1,Dir.VER));
+										s4.addVariable(new KVVariable(3, 3,4,Pos.LAST,1,Dir.VER_RIGHT));
 										
 		KVSetup s5 = new KVSetup(8,4);	s5.add(0,0,0); s5.add(1,0,1); s5.add(0,1,2); s5.add(1,1,3);		s5.add(2,0,5); s5.add(3,0,4); s5.add(2,1,7); s5.add(3,1,6);
 										s5.add(0,2,10); s5.add(1,2,11); s5.add(0,3,8); s5.add(1,3,9);	s5.add(2,2,15); s5.add(3,2,14); s5.add(2,3,13); s5.add(3,3,12);
@@ -82,10 +82,11 @@ public class KVRenderer {
 										s5.add(4,2,30); s5.add(5,2,31); s5.add(4,3,28); s5.add(5,3,29);	s5.add(6,2,27); s5.add(7,2,26); s5.add(6,3,25); s5.add(7,3,24);
 										s5.addVariable(new KVVariable(0, 2,3,Pos.FIRST,1,Dir.HOR));
 										s5.addVariable(new KVVariable(0, 6,7,Pos.FIRST,1,Dir.HOR));
-										s5.addVariable(new KVVariable(1, 2,3,Pos.FIRST,1,Dir.VER));
-										s5.addVariable(new KVVariable(2, 3,4,Pos.LAST,1,Dir.HOR));
-										s5.addVariable(new KVVariable(2, 7,8,Pos.LAST,1,Dir.HOR));
-										s5.addVariable(new KVVariable(3, 3,4,Pos.LAST,1,Dir.VER));
+										s5.addVariable(new KVVariable(1, 2,3,Pos.FIRST,1,Dir.VER_LEFT));
+										//s5.addVariable(new KVVariable(2, 3,4,Pos.LAST,1,Dir.HOR));
+										//s5.addVariable(new KVVariable(2, 5,6,Pos.LAST,1,Dir.HOR));
+										s5.addVariable(new KVVariable(2, 3,6,Pos.LAST,1,Dir.HOR));
+										s5.addVariable(new KVVariable(3, 3,4,Pos.LAST,1,Dir.VER_RIGHT));
 										s5.addVariable(new KVVariable(4, 5,8,Pos.FIRST,2,Dir.HOR));
 										
 		setups[2] = s2;
@@ -139,9 +140,9 @@ public class KVRenderer {
 			
 			final Font fVal = (data.isSelected(cell.nr)) ? f2b : f2;
 			g.setFont(fVal);
-			Rectangle2D r = g.getFontMetrics().getStringBounds(sval, g);
-			int tw = (int)r.getWidth();
-			int th = (int)r.getHeight();
+			final Rectangle2D r = g.getFontMetrics().getStringBounds(sval, g);
+			final int tw = (int)r.getWidth();
+			final int th = (int)r.getHeight();
 			g.drawString(sval, x1+1+cellS/2-tw/2, cellS+y1-1-cellS/2+th/2);	// value
 			
 		}
@@ -152,6 +153,10 @@ public class KVRenderer {
 		for (final KVVariable var : setup.variables) {
 			
 			final String varName = data.getVariableName(var.varNr);
+			
+			final Rectangle2D r = g.getFontMetrics().getStringBounds(varName, g);
+			final int tw = (int)r.getWidth();
+			final int th = (int)r.getHeight();
 			
 			if (var.dir == Dir.HOR) {
 				
@@ -175,7 +180,8 @@ public class KVRenderer {
 				final int y1 = oy + (var.v1-1) * cellS;
 				final int y2 = oy + var.v2 * cellS;
 				final int yt = (y1+y2)/2;
-				final int xt = (int) (ox + xa + (var.d+0.5) * xb) - 4;
+				final int xOff = (var.dir == Dir.VER_LEFT) ? (tw-4) : (4);
+				final int xt = (int) (ox + xa + (var.d+0.5) * xb) - xOff;
 				g.drawLine(x, y1, x, y2);
 				g.drawString(varName, xt, yt+6);
 				
