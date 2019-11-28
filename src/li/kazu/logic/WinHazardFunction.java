@@ -57,7 +57,7 @@ public class WinHazardFunction extends JInternalFrame implements FunctionListene
 		
 		setTitle("Funktionshazards (BETA)");
 		setLayout(new GridBagLayout());
-		setSize(500, 450);
+		setSize(500, 480);
 				
 		tbl1.setModel(mdl1);
 		tbl2.setModel(mdl2);
@@ -92,7 +92,7 @@ public class WinHazardFunction extends JInternalFrame implements FunctionListene
 		gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 1.0; gbc.weighty = 0.4; gbc.gridwidth = 3; gbc.gridheight = 1; add(new JScrollPane(tbl1), gbc);
 		gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 1.0; gbc.weighty = 0.6; gbc.gridwidth = 3; gbc.gridheight = 1; add(new JScrollPane(tbl2), gbc);
 
-		gbc.gridx = 0; gbc.gridy = 5; gbc.weightx = 1.0; gbc.weighty = 0.6; gbc.gridwidth = 3; gbc.gridheight = 1; add(pnlActions, gbc);
+		gbc.gridx = 0; gbc.gridy = 5; gbc.weightx = 1.0; gbc.weighty = 0.0; gbc.gridwidth = 3; gbc.gridheight = 1; add(pnlActions, gbc);
 
 
 		
@@ -141,7 +141,11 @@ public class WinHazardFunction extends JInternalFrame implements FunctionListene
 
 	@Override
 	public void onFunctionChanged(final Function f) {
-		recalc();
+		try {
+			recalc();
+		} catch (final Exception e) {
+			
+		}
 	}
 	
 	private void recalc() {

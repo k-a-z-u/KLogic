@@ -198,17 +198,17 @@ public class Quine implements FunctionListener {
 		return lst;
 	}
 	
-	private List<Entry> getPrimeTermsCore() {
-		final ArrayList<Entry> lst = new ArrayList<>();
-		for (final Level lvl : levels) {
-			for (final Entry e : lvl.entries) {
-				if (e.prime()) {
-					lst.add(e);
-				}
-			}
-		}
-		return lst;
-	}
+//	private List<Entry> getPrimeTermsCore() {
+//		final ArrayList<Entry> lst = new ArrayList<>();
+//		for (final Level lvl : levels) {
+//			for (final Entry e : lvl.entries) {
+//				if (e.prime()) {
+//					lst.add(e);
+//				}
+//			}
+//		}
+//		return lst;
+//	}
 	
 	public boolean wasSuccessful() {
 		return dom != null && dom.wasSuccessful();

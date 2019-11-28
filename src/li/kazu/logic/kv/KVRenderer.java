@@ -156,7 +156,7 @@ public class KVRenderer {
 			
 			final Rectangle2D r = g.getFontMetrics().getStringBounds(varName, g);
 			final int tw = (int)r.getWidth();
-			final int th = (int)r.getHeight();
+			//final int th = (int)r.getHeight();
 			
 			if (var.dir == Dir.HOR) {
 				
